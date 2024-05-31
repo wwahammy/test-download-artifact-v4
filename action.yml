@@ -8,6 +8,7 @@ inputs:
 outputs:
   exists:
     description: Determines if the artifact with the provided name is present.
+    value: ${{ steps.result.outputs.exists }}
 runs:
   using: "composite"
   steps:
@@ -26,6 +27,7 @@ runs:
       shell: bash
       if: ${{ steps.artifact-download.outcome == 'success' }}
     - run: |
-       echo "exists=${{steps.artifact-download.outcome}}" >> $GITHUB_OUTPUT
+       echo "exists=${{ steps.artifact-download.outcome == 'success' }}" >> $GITHUB_OUTPUT
       shell: bash
       if: ${{ steps.artifact-download.outcome == 'success' || steps.artifact-download.outcome == 'failure'}}
+      id: result
