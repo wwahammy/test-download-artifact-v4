@@ -31,7 +31,7 @@ inputs:
     default: ${{ github.run_id }}
   
 outputs:
-  exists: 
+  exists:
     description: Determines if the artifact with the provided name is present.
 runs:
   using: "composite"
