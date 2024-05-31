@@ -15,4 +15,5 @@ jobs:
         continue-on-error: true
       - run: |
           echo "${{ steps.download-artifact-result }}"
+          exit 1
       
