@@ -14,6 +14,6 @@ jobs:
         id: "download-artifact-result"
         continue-on-error: true
       - run: |
-          echo "${{ steps.download-artifact-result }}"
-          exit 1
+          echo "${{ toJSON(steps.download-artifact-result) }}"
+
       
