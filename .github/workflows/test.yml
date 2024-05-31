@@ -31,7 +31,7 @@ jobs:
         id: "existence-check"
       - run: |
           exit 1
-        if: ${{ steps.existence-check.outputs.exists == 'true' }}
+        if: ${{ steps.existence-check.outputs.exists != 'true' }}
         
         
 
