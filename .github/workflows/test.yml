@@ -23,11 +23,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/upload-artifact@v4
         with:
-          name: "existence-check"
+          name: "artifact-that-exists"
           path: action.yml
       - uses: ./
         with:
-          name: "missing-artifact"
+          name: "artifact-that-exists"
         id: "existence-check"
       - run: |
           exit 1
