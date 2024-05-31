@@ -13,8 +13,6 @@ jobs:
           path: random-path
         id: "download-artifact-result"
         continue-on-error: true
-      - uses: actions/download-artifact@v4
-        with:
-          name: "who-knows2"
-          path: random-path
+      - run: |
+          echo "${{ steps.download-artifact-result }}"
       
