@@ -3,33 +3,8 @@ description: Check it
 # description from  https://github.com/actions/download-artifact/blob/c4c6db724f9510b2b3cff5ebcc417c87a2b2fa97/action.yml
 inputs:
   name:
-    description: 'Name of the artifact to download. If unspecified, all artifacts for the run are downloaded.'
-    required: false
-  pattern:
-    description: 'A glob pattern matching the artifacts that should be downloaded. Ignored if name is specified.'
-    required: false
-  merge-multiple:
-    description: 'When multiple artifacts are matched, this changes the behavior of the destination directories.
-      If true, the downloaded artifacts will be in the same directory specified by path.
-      If false, the downloaded artifacts will be extracted into individual named directories within the specified path.'
-    required: false
-    default: 'false'
-  github-token:
-    description: 'The GitHub token used to authenticate with the GitHub API.
-      This is required when downloading artifacts from a different repository or from a different workflow run.
-      If this is not specified, the action will attempt to download artifacts from the current repository and the current workflow run.'
-    required: false
-  repository:
-    description: 'The repository owner and the repository name joined together by "/".
-      If github-token is specified, this is the repository that artifacts will be downloaded from.'
-    required: false
-    default: ${{ github.repository }}
-  run-id:
-    description: 'The id of the workflow run where the desired download artifact was uploaded from.
-      If github-token is specified, this is the run that artifacts will be downloaded from.'
-    required: false
-    default: ${{ github.run_id }}
-  
+    description: 'Name of the artifact to check'
+    required: true
 outputs:
   exists:
     description: Determines if the artifact with the provided name is present.
@@ -43,16 +18,11 @@ runs:
     - uses: actions/download-artifact@v4
       with:
         name: ${{ inputs.name }}
-        pattern: ${{ inputs.pattern }}
-        merge-multiple: ${{ inputs.merge-multiple }}
-        github-token: ${{ inputs.github-token }}
-        repository: ${{ inputs.repository }}
-        run-id: ${{ inputs.run-id }}
-        path: "${{ steps.gen-random.random_number }}/"
+        path: "${{ steps.gen-random.outputs.random_number }}/"
       continue-on-error: true
       id: artifact-download
     - run: |
-        rm -rf ${{ steps.gen-random.random_number }}/
+        rm -rf ${{ steps.gen-random.outputs.random_number }}/
       shell: bash
       if: ${{ steps.artifact-download.outcome == 'success' }}
     - run: |
