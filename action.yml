@@ -54,7 +54,7 @@ runs:
     - run: |
         rm -rf ${{ steps.gen-random.random_number }}/
       shell: bash
-      if: ${{ steps.artifact-download.outcome == 'success' 
+      if: ${{ steps.artifact-download.outcome == 'success' }}
     - run: |
        echo "exists=${{steps.artifact-download.outcome}}" >> $GITHUB_OUTPUT
       shell: bash
