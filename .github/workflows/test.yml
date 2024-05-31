@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./
-        name: "something"
+        with:
+          name: "something"
+        
 
       
