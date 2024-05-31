@@ -4,11 +4,27 @@ on:
   push:
 
 jobs:
-  sets_failure_on_missing:
-    name: Sets failure when no artifact for the name exists
+  sets_false_on_missing:
+    name: Sets false when no artifact for the name exists
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          name: "missing-artifact"
+        id: "existence-check"
+      - run: |
+          exit 1
+        if: ${{ steps.existence-check.outputs.exists != false }}
+  sets_true_when_there:
+    name: Sets true when no artifact for the name exists
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "existence-check"
+          path: action.yml
       - uses: ./
         with:
           name: "missing-artifact"
