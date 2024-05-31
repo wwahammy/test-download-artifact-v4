@@ -14,7 +14,7 @@ runs:
   steps:
     - name: generate random directory
       shell: bash
-      run: echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
+      run: echo "random_number=$(($RANDOM))" >> $GITHUB_OUTPUT
       id: gen-random
     - uses: actions/download-artifact@v4
       with:
