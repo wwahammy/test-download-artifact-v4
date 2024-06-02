@@ -17,12 +17,22 @@ jobs:
   tweak-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: applicreation/versions-action@v1
-        id: versions
+      - name: Parser
+        id: parser
+        run: |
+          REF='${{ github.ref }}'
+          if [[ $REF == refs/tags/v* ]]; then
+            VERSION=${REF#refs/tags/v}
+          else
+            echo "No idea how to decipher this ref: $REF"
+            exit 1
+          fi 
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Update Semantic Version
         uses: cookbenjamin/update-version@v1.0.1
         with:
-          current-version: "${{steps.versions.outputs.major}}.${{steps.versions.outputs.minor}}.${{steps.versions.outputs.patch}}"
+          current-version: "${{steps.parser.outputs.version}}"
           prerelease-fragment: "REMOVE"
           increment-version-fragment: ${{ inputs.kind }}
         id: version-creator
