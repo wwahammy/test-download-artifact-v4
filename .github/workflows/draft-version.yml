@@ -23,7 +23,7 @@ jobs:
         uses: cookbenjamin/update-version@v1.0.1
         with:
           current-version: "${{steps.versions.outputs.major}}.${{steps.versions.outputs.minor}}.${{steps.versions.outputs.patch}}"
-          prerelease-fragment: "NONE"
+          prerelease-fragment: "REMOVE"
           increment-version-fragment: ${{ inputs.kind }}
         id: version-creator
       - name: tag the new version
