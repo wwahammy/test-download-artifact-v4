@@ -1,0 +1,34 @@
+on:
+  workflow_dispatch:
+    inputs:
+      kind:
+        type: choice
+        options:
+          - "PATCH"
+          - "MINOR"
+          - "MAJOR"
+        default: "PATCH"
+        description: The type of version to create
+      
+permissions: 
+  contents: write
+
+jobs:
+  tweak-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: applicreation/versions-action@v1
+        id: versions
+      - name: Update Semantic Version
+        uses: cookbenjamin/update-version@v1.0.1
+        with:
+          current-version: "${{steps.versions.outputs.major}}.${{steps.versions.outputs.minor}}.${{steps.versions.outputs.patch}}"
+          prerelease-fragment: "NONE"
+          increment-version-fragment: ${{ inputs.kind }}
+        id: version-creator
+      - name: tag the new version
+        run: |
+          git tag v${{ steps.version-creator.outputs.next-version}}
+          git push origin v${{ steps.version-creator.outputs.next-version}}
+
+
