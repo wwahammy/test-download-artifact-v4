@@ -24,7 +24,6 @@ jobs:
           repo_token: ${{github.token}}
         id: version-checker
 
-      - uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.version-checker.outputs.next_version }}
+      - run: |
+          gh release create v${{ steps.version-checker.outputs.next_version }} --generate-notes
 
